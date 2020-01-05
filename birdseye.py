@@ -17,10 +17,6 @@ class bcolors:
 db = './db/birdseye.db'
 headers = {'Accept-Language': 'en-US,en;q=0.5'}
 
-banner = '''
-
-		'''
-
 commands = {
 	'twitter':'twitter start',
 	'search':'search user',
