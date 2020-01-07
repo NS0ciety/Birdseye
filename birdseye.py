@@ -176,6 +176,7 @@ def birdseye():
 		print bcolors.RED + ' Exiting...'
 		time.sleep(2)
 		os.system('clear')
+		sys.exit()
 	else:
 		os.system('clear')
 		print bcolors.RED + '	Invalid Syntax.\n'
