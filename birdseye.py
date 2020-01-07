@@ -176,10 +176,6 @@ def birdseye():
 		print bcolors.RED + ' Exiting...'
 		time.sleep(2)
 		os.system('clear')
-		filelist = [ f for f in os.listdir('/root/rebuild/') if f.endswith(".pyc") ]
-		for f in filelist:
-			os.remove(os.path.join('root/rebuild/', f))
-			sys.exit()
 	else:
 		os.system('clear')
 		print bcolors.RED + '	Invalid Syntax.\n'
