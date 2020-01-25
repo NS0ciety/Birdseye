@@ -29,7 +29,7 @@ while (status == True):
 
 else:
 	statusFalse = bcolors.BLUE + ' DB Connection Status: ' + bcolors.RED + 'Disconnected\n'
-	print statusFalses
+	print statusFalse
 
 try:
 	cursor.execute('''CREATE TABLE IF NOT EXISTS FacebookUsers(
