@@ -53,7 +53,7 @@ try:
 	print bcolors.BLUE + '   Facebook' + bcolors.GREEN + ' user table was successfully loaded.'
 
 except sqlite3.Error as Error:
-	print ' DB Facebook table load failed: {}'.format(Error)
+	print ' DB tables load failed: {}'.format(Error)
 
 try:
 	cursor.execute('''CREATE TABLE IF NOT EXISTS TwitterUsers(
