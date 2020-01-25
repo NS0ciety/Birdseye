@@ -25,7 +25,7 @@ def twitterScrape():
 
 	else:
 		statusFalse = bcolors.BLUE + ' DB Connection Status: ' + bcolors.RED + 'Disconnected\n'
-		print statusFalses
+		print statusFalse
 
 	twitterDataTypes = {
 		'username':'username',
