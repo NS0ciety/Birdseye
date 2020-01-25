@@ -25,7 +25,7 @@ def instagramScrape():
 
 	else:
 		statusFalse = bcolors.BLUE + ' DB Connection Status: ' + bcolors.RED + 'Disconnected\n'
-		print statusFalses
+		print statusFalse
 
 	os.system('clear')
 	print statusTrue
