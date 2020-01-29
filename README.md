@@ -13,6 +13,3 @@ chmod +x birdseye.py
 ./birdseye.py
 
 NOTE: Facebook uses techniques to try to block scraping attempts. This can be bypassed by using tools like Torghost to rotate your IP address.
-
-
- 
