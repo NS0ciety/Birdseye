@@ -49,7 +49,7 @@ def instagramScrape():
 		x = '\n'
 
 		print statusTrue
-		print bcolors.RED + '\n Instagram Link: ' + bcolors.BLUE + url + bcolors.GREEN
+		print bcolors.RED + ' Instagram Link: ' + bcolors.BLUE + url + bcolors.GREEN
 		print bcolors.RED + ' Instagram ID: ' + bcolors.GREEN + ID + bcolors.GREEN
 		
 		scripts = soup.select('script[type="application/ld+json"]')
@@ -59,110 +59,100 @@ def instagramScrape():
 		print bcolors.BLUE + '\n User Details:' + bcolors.GREEN
 		
 		user_type = scripts_content['@type']
-		print ' User Type: ' + user_type
+		print bcolors.RED + ' User Type: ' + bcolors.GREEN + user_type
 
 		for names in soup.select('title'):
 			name_split = names.get_text()
 			name_s = name_split.split('(', 1)
 			name = name_s[0].replace('\n', '')
-			print ' Full Name: ' + name
+			print bcolors.RED + ' Full Name: ' + bcolors.GREEN + name
 			
 		description = scripts_content['description']
-		print ' Description: ' + description
+		print bcolors.RED + ' Description: ' + bcolors.GREEN + description
 		
 		main_entity = scripts_content['mainEntityofPage']
 		page_type = main_entity['@type']
-		print ' Page Type: ' + page_type
+		print bcolors.RED + ' Page Type: ' + bcolors.GREEN + page_type
 		
 		interactions = main_entity['interactionStatistic']
 		followers = interactions['userInteractionCount']
-		print ' Followers: ' + followers
+		print bcolors.RED + ' Followers: ' + bcolors.GREEN + followers
 		
 		userscript = soup.select('script')[4].text
-		datapack = open("./tmp/instadata.txt","w+")
-		datapack.write(userscript)
-		datapack.close()
 		
-		for line in fileinput.input('tmp/instadata.txt', inplace=True):
-			print line.replace(',', '\n'),
+		following = userscript.split(',')[17].replace('"edge_follow":{"count":', '').replace('}', '')
+		print bcolors.RED + ' Following: ' + bcolors.GREEN + following
 
-		datapack = open("./tmp/instadata.txt", "r")
-		data_to_read = datapack.readlines()
-		datapack.close()
+		posts = userscript.split(',')[44].replace('"edge_owner_to_timeline_media":{"count":', '').replace('\n', '')
+		print bcolors.RED + ' Post Count: ' + bcolors.GREEN + posts
 		
-		following = data_to_read[17].replace('"edge_follow":{"count":', '')
-		print ' Following: ' + following.replace('}\n', '')
+		highlights = userscript.split(',')[23].replace('"highlight_reel_count":', '').replace('\n', '')
+		print bcolors.RED + ' Highlight Reel Count: ' + bcolors.GREEN + highlights
 
-		posts = data_to_read[44].replace('"edge_owner_to_timeline_media":{"count":', '').replace('\n', '')
-		print ' Post Count: ' + posts
-		
-		highlights = data_to_read[23].replace('"highlight_reel_count":', '').replace('\n', '')
-		print ' Highlight Reel Count: ' + highlights
+		videos = userscript.split(',')[40].replace('"edge_felix_video_timeline":{"count":', '').replace('\n', '')
+		print bcolors.RED + ' Video Count: ' + bcolors.GREEN + videos
 
-		videos = data_to_read[40].replace('"edge_felix_video_timeline":{"count":', '').replace('\n', '')
-		print ' Video Count: ' + videos
-
-		isPrivate = data_to_read[31].replace('"is_private":', '').replace('\n', '')
-		print ' Private Account: ' + isPrivate
+		isPrivate = userscript.split(',')[31].replace('"is_private":', '').replace('\n', '')
+		print bcolors.RED + ' Private Account: ' + bcolors.GREEN + isPrivate
 		
-		isVerified = data_to_read[32].replace('"is_verified":', '').replace('\n', '')
-		print ' Verified Account: ' + isVerified
+		isVerified = userscript.split(',')[32].replace('"is_verified":', '').replace('\n', '')
+		print bcolors.RED + ' Verified Account: ' + bcolors.GREEN + isVerified
 		
-		fbConnected = data_to_read[39].replace('"connected_fb_page":', '').replace('\n', '')
+		fbConnected = userscript.split(',')[39].replace('"connected_fb_page":', '').replace('\n', '')
 		if 'null' in fbConnected:
 			fbConnected = 'false'
-			print ' Connected to Facebook Account: ' + fbConnected
+			print bcolors.RED + ' Connected to Facebook Account: ' + bcolors.GREEN + fbConnected
 
 
 		#Post 1
 		print bcolors.BLUE + '\n Post 1:' + bcolors.GREEN
-		post1_id = data_to_read[48].replace('"id":"', '').replace('"\n', '')
-		print ' Post 1 - Post ID: ' + post1_id
-		post1_owner_id = data_to_read[57].replace('"owner":{"id":"', '').replace('"\n', '')
-		print ' Post 1 - Owner ID: ' + post1_owner_id
-		post1_timestamp = data_to_read[65].replace('"taken_at_timestamp":', '').replace('\n', '')
-		print ' Post 1 - Timestamp: ' + post1_timestamp
-		post1_isVideo = data_to_read[59].replace('"is_video":', '').replace('\n', '')
-		print ' Post 1 - Is Video: ' + post1_isVideo
-		accessibility_caption_1st = data_to_read[60].replace('"accessibility_caption":"', '').replace('\n', '') 
-		accessibility_caption_2nd = data_to_read[61].replace('\n', '') 
+		post1_id = userscript.split(',')[48].replace('"id":"', '').replace('"', '')
+		print bcolors.RED + ' Post 1 - Post ID: ' + bcolors.GREEN + post1_id
+		post1_owner_id = userscript.split(',')[57].replace('"owner":{"id":"', '').replace('"', '')
+		print bcolors.RED + ' Post 1 - Owner ID: ' + bcolors.GREEN + post1_owner_id
+		post1_timestamp = userscript.split(',')[65].replace('"taken_at_timestamp":', '').replace('\n', '')
+		print bcolors.RED + ' Post 1 - Timestamp: ' + bcolors.GREEN + post1_timestamp
+		post1_isVideo = userscript.split(',')[59].replace('"is_video":', '').replace('\n', '')
+		print bcolors.RED + ' Post 1 - Is Video: ' + bcolors.GREEN + post1_isVideo
+		accessibility_caption_1st = userscript.split(',')[60].replace('"accessibility_caption":"', '').replace('\n', '') 
+		accessibility_caption_2nd = userscript.split(',')[61].replace('"', '') 
 		accessibility_caption = accessibility_caption_1st + accessibility_caption_2nd
-		print ' Post 1 - Accessibility Caption: ' + accessibility_caption
-		post1_user_caption = data_to_read[62].replace('"edge_media_to_caption":{"edges":[{"node":{"text":"', '').replace('"}}]}\n', '')
-		print ' Post 1 - User Caption: ' + post1_user_caption
-		post1_comments = data_to_read[63].replace('"edge_media_to_comment":{"count":', '').replace('}\n', '')
-		print ' Post 1 - Comments' + post1_comments
-		post1_comments_disabled = data_to_read[64].replace('"comments_disabled":', '').replace('\n', '')
-		print ' Post 1 - Comments Disabled: ' + post1_comments_disabled
-		post1_likedBy = data_to_read[66].replace('"edge_liked_by":{"count":', '').replace('}\n', '')
-		print ' Post 1 - Liked By: ' + post1_likedBy
-		post1_location = data_to_read[68].replace('"location":', '').replace('\n', '')
-		print ' Post 1 = Location: ' + post1_location
+		print bcolors.RED + ' Post 1 - Accessibility Caption: ' + bcolors.GREEN + accessibility_caption
+		post1_user_caption = userscript.split(',')[62].replace('"edge_media_to_caption":{"edges":[{"node":{"text":"', '').replace('"}}]}', '')
+		print bcolors.RED + ' Post 1 - User Caption: ' + bcolors.GREEN + post1_user_caption
+		post1_comments = userscript.split(',')[63].replace('"edge_media_to_comment":{"count":', '').replace('}', '')
+		print bcolors.RED + ' Post 1 - Comments: ' + bcolors.GREEN + post1_comments
+		post1_comments_disabled = userscript.split(',')[64].replace('"comments_disabled":', '').replace('\n', '')
+		print bcolors.RED + ' Post 1 - Comments Disabled: ' + bcolors.GREEN + post1_comments_disabled
+		post1_likedBy = userscript.split(',')[66].replace('"edge_liked_by":{"count":', '').replace('}', '')
+		print bcolors.RED + ' Post 1 - Liked By: ' + bcolors.GREEN + post1_likedBy
+		post1_location = userscript.split(',')[68].replace('"location":', '').replace('\n', '')
+		print bcolors.RED + ' Post 1 = Location: ' + bcolors.GREEN + post1_location
 		
 		#Post2
 		print bcolors.BLUE + '\n Post 2:' + bcolors.GREEN
-		post2_id = data_to_read[86].replace('"id":"', '').replace('"\n', '')
-		print ' Post 2 - Post ID: ' + post2_id
-		post2_owner_id = data_to_read[95].replace('"owner":{"id":"', '').replace('"\n', '')
-		print ' Post 2 - Owner ID: ' + post2_owner_id
-		post2_timestamp = data_to_read[103].replace('"taken_at_timestamp":', '').replace('\n', '')
-		print ' Post 2 - Timestamp: ' + post2_timestamp
-		post2_isVideo = data_to_read[97].replace('"is_video":', '').replace('\n', '')
-		print ' Post 2 - Is Video: ' + post2_isVideo
-		post2_accessibility_caption_1st = data_to_read[98].replace('"accessibility_caption":"', '').replace('\n', '') 
-		post2_accessibility_caption_2nd = data_to_read[99].replace('\n', '') 
+		post2_id = userscript.split(',')[86].replace('"id":"', '').replace('"', '')
+		print bcolors.RED + ' Post 2 - Post ID: ' + bcolors.GREEN + post2_id
+		post2_owner_id = userscript.split(',')[95].replace('"owner":{"id":"', '').replace('"', '')
+		print bcolors.RED + ' Post 2 - Owner ID: ' + bcolors.GREEN + post2_owner_id
+		post2_timestamp = userscript.split(',')[103].replace('"taken_at_timestamp":', '').replace('\n', '')
+		print bcolors.RED + ' Post 2 - Timestamp: ' + bcolors.GREEN + post2_timestamp
+		post2_isVideo = userscript.split(',')[97].replace('"is_video":', '').replace('\n', '')
+		print bcolors.RED + ' Post 2 - Is Video: ' + bcolors.GREEN + post2_isVideo
+		post2_accessibility_caption_1st = userscript.split(',')[98].replace('"accessibility_caption":"', '').replace('\n', '') 
+		post2_accessibility_caption_2nd = userscript.split(',')[99].replace('"', '') 
 		post2_accessibility_caption = post2_accessibility_caption_1st + post2_accessibility_caption_2nd
-		print ' Post 2 - Accessibility Caption: ' + post2_accessibility_caption
-		post2_user_caption = data_to_read[100].replace('"edge_media_to_caption":{"edges":[{"node":{"text":"', '').replace('"}}]}\n', '')
-		print ' Post 2 - User Caption: ' + post2_user_caption
-		post2_comments = data_to_read[101].replace('"edge_media_to_comment":{"count":', '').replace('}\n', '')
-		print ' Post 2 - Comments' + post2_comments
-		post2_comments_disabled = data_to_read[102].replace('"comments_disabled":', '').replace('\n', '')
-		print ' Post 2 - Comments Disabled: ' + post2_comments_disabled
-		post2_likedBy = data_to_read[104].replace('"edge_liked_by":{"count":', '').replace('}\n', '')
-		print ' Post 2 - Liked By: ' + post2_likedBy
-		post2_location = data_to_read[106].replace('"location":', '').replace('\n', '')
-		print ' Post 2 = Location: ' + post2_location + '\n'
+		print bcolors.RED + ' Post 2 - Accessibility Caption: ' + bcolors.GREEN + post2_accessibility_caption
+		post2_user_caption = userscript.split(',')[100].replace('"edge_media_to_caption":{"edges":[{"node":{"text":"', '').replace('"}}]}', '')
+		print bcolors.RED + ' Post 2 - User Caption: ' + bcolors.GREEN + post2_user_caption
+		post2_comments = userscript.split(',')[101].replace('"edge_media_to_comment":{"count":', '').replace('}', '')
+		print bcolors.RED + ' Post 2 - Comments: ' + bcolors.GREEN + post2_comments
+		post2_comments_disabled = userscript.split(',')[102].replace('"comments_disabled":', '').replace('\n', '')
+		print bcolors.RED + ' Post 2 - Comments Disabled: ' + bcolors.GREEN + post2_comments_disabled
+		post2_likedBy = userscript.split(',')[104].replace('"edge_liked_by":{"count":', '').replace('}', '')
+		print bcolors.RED + ' Post 2 - Liked By: ' + bcolors.GREEN + post2_likedBy
+		post2_location = userscript.split(',')[106].replace('"location":', '').replace('\n', '')
+		print bcolors.RED + ' Post 2 = Location: ' + bcolors.GREEN + post2_location + '\n'
 		
 		try:
 			cursor.execute("INSERT INTO InstagramUsers (USERTYPE, NAME, DESCRIPTION, PAGETYPE, FOLLOWERS, FOLLOWING, POSTS, HIGHLIGHTS, VIDEOS, ISPRIVATE, ISVERIFIED, FBCONNECTED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (user_type, name, description, page_type, followers, following, posts, highlights, videos, isPrivate, isVerified, fbConnected))
@@ -173,44 +163,6 @@ def instagramScrape():
 		except sqlite3.IntegrityError as iError:
 			print bcolors.RED + ' ' + ID + bcolors.GREEN + ' Already exists in DB.\n'
 				
-
 	else:
 		os.system('clear')
 		print bcolors.RED + ' Invalid Syntax. Exiting to the main menu.' + bcolors.GREEN
-
-		os.system('clear')
-		url = 'https://instagram.com/'+ID
-		pageres = requests.get(url, headers=headers)
-		soup = BeautifulSoup(pageres.content, 'html.parser')
-		x = '\n'
-
-		print statusTrue
-		print bcolors.RED + '\n Instagram Link: ' + bcolors.BLUE + url + bcolors.GREEN
-		print bcolors.RED + ' Instagram ID: ' + bcolors.GREEN + ID + bcolors.GREEN
-
-		for name in soup.find_all('a', class_='_2nlw _2nlv'):
-			name = name.get_text()
-			print ' Name: ' + name
-			
-		for contactinfo in soup.find_all('span', class_='_50f8 _2iem'):
-			contactinfo = contactinfo.get_text()
-			print ' Contact Information: ' + contactinfo
-
-		for location in soup.find_all('span', class_='_2iel _50f7'):
-			location = location.get_text()
-			print ' Current City: ' + location
-
-			try:
-				cursor.execute("INSERT INTO InstagramUsers (USERNAME, NAME, CONTACTINFO, LOCATION, ABOUTUSER, SKILLS, EDUCATION, FRIENDS, PHOTOCOUNT, PHOTO1, PHOTO2, PHOTO3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (ID, name, contactinfo, location, aboutuser, skills, education, friends, photocount, photo1, photo2, photo3))
-				conn.commit()
-				print bcolors.RED + ' ' + name + bcolors.GREEN + ' was added to the DB successfully.\n'
-				
-
-			except sqlite3.IntegrityError as iError:
-				print bcolors.RED + ' ' + ID + bcolors.GREEN + ' Already exists in DB.\n'
-				
-
-		else:
-			os.system('clear')
-			print bcolors.RED + ' Invalid Syntax. Exiting to the main menu.' + bcolors.GREEN
-
