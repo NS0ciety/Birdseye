@@ -83,7 +83,7 @@ def instagramScrape():
 		datapack.write(userscript)
 		datapack.close()
 		
-		for line in fileinput.input('/root/Birdseye/tmp/instadata.txt', inplace=True):
+		for line in fileinput.input('tmp/instadata.txt', inplace=True):
 			print line.replace(',', '\n'),
 
 		datapack = open("./tmp/instadata.txt", "r")
