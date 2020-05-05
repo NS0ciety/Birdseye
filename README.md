@@ -4,7 +4,7 @@ Birdseye uses an sqlite database to save gathered information allowing you to cr
 FEATURES:  
 Facebook scraping  
 Twitter scraping  
-Instagram scraping (currently in development)  
+Instagram scraping  
 Database handling to save/modify & delete users  
 
 USAGE:  
