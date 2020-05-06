@@ -81,7 +81,8 @@ except sqlite3.Error as Error:
 try:
 		
 	cursor.execute('''CREATE TABLE IF NOT EXISTS InstagramUsers(
-				USERTYPE 	TEXT	PRIMARY KEY,
+				ID	 	TEXT	PRIMARY KEY,
+				USERTYPE	TEXT,
 				NAME		TEXT,
 				DESCRIPTION	TEXT,
 				PAGETYPE	TEXT,
