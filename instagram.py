@@ -903,7 +903,7 @@ def instagramScrape():
 			print bcolors.RED + ' Location: ' + bcolors.GREEN + post2_location
 		
 		try:
-			cursor.execute("INSERT INTO InstagramUsers (USERTYPE, NAME, DESCRIPTION, PAGETYPE, FOLLOWERS, FOLLOWING, POSTS, HIGHLIGHTS, VIDEOS, ISPRIVATE, ISVERIFIED, FBCONNECTED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (user_type, name, description, page_type, followers, following, posts, highlights, videos, isPrivate, isVerified, fbConnected))
+			cursor.execute("INSERT INTO InstagramUsers (ID, USERTYPE, NAME, DESCRIPTION, PAGETYPE, FOLLOWERS, FOLLOWING, POSTS, HIGHLIGHTS, VIDEOS, ISPRIVATE, ISVERIFIED, FBCONNECTED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (ID, user_type, name, description, page_type, followers, following, posts, highlights, videos, isPrivate, isVerified, fbConnected))
 			conn.commit()
 			print bcolors.RED + ' ' + name + bcolors.GREEN + ' was added to the DB successfully.\n'
 				
