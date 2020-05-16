@@ -143,9 +143,6 @@ def birdseye():
 
 	elif cmd in commands['instagram']:
 		instagramScrape()
-#		os.system('clear')
-#		print bcolors.RED + ' [!]' + bcolors.GREEN + 'FEATURE COMING SOON'  + bcolors.RED + '[!]\n'  
-#		birdseye()
 
 	elif cmd in commands['search']:
 		dbsearch()
