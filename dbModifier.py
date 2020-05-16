@@ -29,13 +29,29 @@ twitterDataTypes = {
 	'joindate':'joindate',
 	'birthdate':'birthdate'
 	}
+	
+instagramDataTypes = {
+	'ID':'id',
+	'user_type':'user type',
+	'name':'name',
+	'description':'description',
+	'page_type':'page type',
+	'followers':'followers',
+	'following':'following',
+	'posts':'posts',
+	'highlights':'highlights',
+	'videos':'videos',
+	'isPrivate':'private',
+	'isVerified':'verified',
+	'fbConnected':'fb connected'
+	}
 
 def dbModify():
 	import sqlite3
 	from sqlite3 import Error
 	import sys, os, time
 
-	db = './db/test.db'
+	db = './db/birdseye.db'
 	conn = sqlite3.connect(db)
 	cursor = conn.cursor()
 
@@ -76,7 +92,8 @@ def dbModify():
 
 		print bcolors.BLUE + ' Tables' + bcolors.GREEN + ' to search:\n'
 		print '   Facebook		-	' + bcolors.RED + '	facebook'
-		print bcolors.GREEN + '   Twitter		-	' + bcolors.RED + '	twitter\n'
+		print bcolors.GREEN + '   Twitter		-	' + bcolors.RED + '	twitter'
+		print bcolors.GREEN + '   Instagram		-	' + bcolors.RED + '	instagram\n'
 
 		choice = raw_input(bcolors.RED + ' Choose Site Record to update: ' + bcolors.GREEN)
 
@@ -414,6 +431,236 @@ def dbModify():
 						os.system('clear')
 						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " birth date. Birth date is still " + bcolors.BLUE + joindateToMod + "\n"
 
+
+				else:
+					os.system('clear')
+					print bcolors.RED + ' Invalid Syntax. Exiting to the main menu.' + bcolors.GREEN
+
+			except TypeError as tError:
+				os.system('clear')
+				print ' ' + bcolors.RED + unameToMod + bcolors.GREEN + ' does not exist in DB.\n ' + bcolors.RED + 'Exiting to the main menu.\n' + bcolors.GREEN
+
+
+
+
+		elif choice == 'instagram':
+			os.system('clear')
+			print statusTrue
+			print bcolors.BLUE + ' Data types:'
+			
+			ID = bcolors.GREEN + '   ID				-		' + bcolors.RED + instagramDataTypes['ID']
+			user_type = bcolors.GREEN + '   User Type			-		' + bcolors.RED + instagramDataTypes['user_type']
+			name = bcolors.GREEN + '   Name				-		' + bcolors.RED + instagramDataTypes['name']
+			description = bcolors.GREEN + '   Description			-		' + bcolors.RED + instagramDataTypes['description']
+			page_type = bcolors.GREEN + '   Page Type			-		' + bcolors.RED + instagramDataTypes['page_type']
+			followers = bcolors.GREEN + '   Followers			-		' + bcolors.RED + instagramDataTypes['followers']
+			following = bcolors.GREEN + '   Following			-		' + bcolors.RED + instagramDataTypes['following']
+			posts = bcolors.GREEN + '   Posts			-		' + bcolors.RED + instagramDataTypes['posts']	
+			highlights = bcolors.GREEN + '   Highlights			-		' + bcolors.RED + instagramDataTypes['highlights']
+			videos = bcolors.GREEN + '   Videos			-		' + bcolors.RED + instagramDataTypes['videos']
+			isPrivate = bcolors.GREEN + '   Private			-		' + bcolors.RED + instagramDataTypes['isPrivate']
+			isVerified = bcolors.GREEN + '   Verified			-		' + bcolors.RED + instagramDataTypes['isVerified']
+			fb_connected = bcolors.GREEN + '   Facebook Connected		-		' + bcolors.RED + instagramDataTypes['fbConnected']
+			x = '\n'
+
+			print x, ID, x, user_type, x, name, x, description, x, page_type, x, followers, x, following, x, posts, x, highlights, x, videos, x, isPrivate, x, isVerified, x, fb_connected, x
+
+			dataType = raw_input(' Choose data to modify: ' + bcolors.GREEN)
+			unameToMod = raw_input(bcolors.RED + ' Enter username of user to modify: ' + bcolors.GREEN)
+			print ' Checking if ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+			time.sleep(3)
+
+			try:
+	 			uname = cursor.execute("SELECT * FROM InstagramUsers WHERE ID = ?", (unameToMod,))
+				data = cursor.fetchone()
+		
+				if dataType == instagramDataTypes['ID']:
+					for uname in data[0]:
+						print ' ID: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newUname = raw_input(bcolors.RED + ' Enter new username: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET ID = ? WHERE ID = ?", (newUname, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " ID to " + bcolors.BLUE + newUname + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Update failed " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " ID is still " + bcolors.RED + unameToMod + "\n"
+
+				elif dataType in instagramDataTypes['user_type']:
+					for uname in data[0]:
+						IDToMod = data[1]
+						print ' ID: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newUsertype = raw_input(bcolors.RED + ' Enter new user type: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET USERTYPE = ? WHERE ID = ?", (newUsertype, IDToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + IDToMod + "'s" + bcolors.GREEN + " User Type to " + bcolors.BLUE + newUsertype + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Update failed " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " name is still " + bcolors.BLUE + unameToMod + "\n"
+
+				elif dataType in instagramDataTypes['name']:
+					for uname in data[0]:
+						nameToMod = data[2]
+						print ' ID: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newName = raw_input(bcolors.RED + ' Enter new name: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET NAME = ? WHERE ID = ?", (newName, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " name to " + bcolors.BLUE + newName + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Update failed " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " name is still " + bcolors.BLUE + unameToMod + "\n"
+					
+
+				elif dataType in instagramDataTypes['description']:
+					for uname in data[0]:
+						descriptionToMod = data[3]
+						print ' Description: ' + bcolors.BLUE + descriptionToMod + bcolors.GREEN + ' for ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newDescription = raw_input(bcolors.RED + ' Enter new description: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET DESCRIPTION = ? WHERE ID = ?", (newDescription, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " description to " + bcolors.BLUE + newDescription + "\n"
+						break	
+					else:
+						os.system('clear')
+						print bcolors.GREEN + " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " description. Description is still " + bcolors.BLUE + DescriptionToMod + "\n"
+					
+
+				elif dataType in instagramDataTypes['page_type']:
+					for uname in data[0]:
+						pagetypeToMod = data[4]
+						print bcolors.GREEN + " Page type: " + bcolors.RED + pagetypeToMod + bcolors.GREEN + " exists in DB."
+						newPagetype = raw_input(bcolors.RED + ' Enter new page type: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET PAGETYPE = ? WHERE ID = ?", (newPagetype, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s " + bcolors.GREEN + "page type from " + bcolors.RED + pagetypeToMod + bcolors.GREEN + " to " + bcolors.BLUE + newPagetype + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " page type. Page Type is still " + bcolors.BLUE + pagetypeToMod + "\n"
+					
+
+				elif dataType in instagramDataTypes['followers']:
+					for uname in data[0]:
+						followersToMod = data[5]
+						print ' Followers: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+
+						newFollowers = raw_input(bcolors.RED + ' Enter new followers: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET FOLLOWERS = ? WHERE ID = ?", (newFollowers, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " followers from " + bcolors.RED + followersToMod + bcolors.GREEN + " to " + bcolors.BLUE + newFollowers + "\n"
+						break				
+					else:
+						os.system('clear')
+						print " Update failed " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " followers. Followers is still " + bcolors.BLUE + followersToMod + "\n"
+					
+
+				elif dataType in instagramDataTypes['following']:
+					for uname in data[0]:
+						followingToMod = data[6]
+						print ' Following: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newFollowing = raw_input(bcolors.RED + ' Enter new following: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET FOLLOWING = ? WHERE ID = ?", (newFollowing, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " following from " + bcolors.RED + followingToMod + bcolors.GREEN + " to " + bcolors.BLUE + newFollowers + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " following. Following is still " + bcolors.BLUE + followingToMod + "\n"
+					
+
+				elif dataType in instagramDataTypes['posts']:
+					for uname in data[0]:
+						postsToMod = data[7]
+						print ' Posts: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newPosts = raw_input(bcolors.RED + ' Enter new Posts: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET POSTS = ? WHERE ID = ?", (newPosts, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " posts from " + postsToMod + bcolors.GREEN + " to " + bcolors.BLUE + newPosts + "\n"
+						break							
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " posts. Posts is still " + bcolors.BLUE + postsToMod + "\n"
+						
+				elif dataType in instagramDataTypes['highlights']:
+					for uname in data[0]:
+						highlightsToMod = data[8]
+						print ' Highlights: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newHighlights = raw_input(bcolors.RED + ' Enter new highlights: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET HIGHLIGHTS = ? WHERE ID = ?", (newHighlights, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " highlights from " + highlightsToMod + bcolors.GREEN + " to " + bcolors.BLUE + newHighlights + "\n"
+						break							
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " highlights. Highlights is still " + bcolors.BLUE + highlightsToMod + "\n"
+						
+				elif dataType in instagramDataTypes['videos']:
+					for uname in data[0]:
+						videosToMod = data[9]
+						print ' Videos: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newVideos = raw_input(bcolors.RED + ' Enter new videos: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET VIDEOS = ? WHERE ID = ?", (newVideos, videosToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " videos from " + videosToMod + bcolors.GREEN + " to " + bcolors.BLUE + newVideos + "\n"
+						break							
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " videos. Videos is still " + bcolors.BLUE + videosToMod + "\n"
+						
+				elif dataType in instagramDataTypes['isPrivate']:
+					for uname in data[0]:
+						privateToMod = data[10]
+						print ' Is Private: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newPrivate = raw_input(bcolors.RED + ' Enter new private: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET ISPRIVATE = ? WHERE ID = ?", (newPrivate, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " private from " + privateToMod + bcolors.GREEN + " to " + bcolors.BLUE + newPrivate + "\n"
+						break							
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " private. Private is still " + bcolors.BLUE + privateToMod + "\n"
+						
+				elif dataType in instagramDataTypes['isVerified']:
+					for uname in data[0]:
+						verifiedToMod = data[11]
+						print ' Is Verified: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newVerified = raw_input(bcolors.RED + ' Enter new verified: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET ISVERIFIED = ? WHERE ID = ?", (newVerified, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " verified from " + verifiedToMod + bcolors.GREEN + " to " + bcolors.BLUE + newVerified + "\n"
+						break							
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " verified. Verified is still " + bcolors.BLUE + verifiedToMod + "\n"
+						
+				elif dataType in instagramDataTypes['fbConnected']:
+					for uname in data[0]:
+						fbconnToMod = data[12]
+						print ' Facebook Connected: ' + bcolors.RED + unameToMod + bcolors.GREEN + ' exists in DB.'
+						newFbconn = raw_input(bcolors.RED + ' Enter new facebook connected: ' + bcolors.GREEN)
+						cursor.execute("UPDATE InstagramUsers SET FBCONNECTED = ? WHERE ID = ?", (newFbconn, unameToMod))
+						conn.commit()
+						os.system('clear')
+						print " Successfully updated " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " facebook connected from " + fbconnToMod + bcolors.GREEN + " to " + bcolors.BLUE + newFbconn + "\n"
+						break
+					else:
+						os.system('clear')
+						print " Failed to update " + bcolors.RED + unameToMod + "'s" + bcolors.GREEN + " facebook connected. Facebook connected is still " + bcolors.BLUE + fbconnToMod + "\n"
+
 				else:
 					os.system('clear')
 					print bcolors.RED + ' Invalid DataType: Exiting to main menu.' + bcolors.GREEN
@@ -447,7 +694,8 @@ def dbModify():
 		print statusTrue
 		print bcolors.BLUE + ' Sites:\n'
 		print bcolors.GREEN + '   Facebook		-		' + bcolors.RED + 'facebook'
-		print bcolors.GREEN + '   Twitter		-		' + bcolors.RED + 'twitter\n'
+		print bcolors.GREEN + '   Twitter		-		' + bcolors.RED + 'twitter'
+		print bcolors.GREEN + '   Instagram		-		' + bcolors.RED + 'instagram\n'
 
 		choice = raw_input(bcolors.RED + ' Choose from site to delete user: ' + bcolors.GREEN)
 		userToDel = raw_input(bcolors.RED + ' Enter username of record to delete: ' + bcolors.GREEN)
@@ -521,6 +769,39 @@ def dbModify():
 			except TypeError as tError:
 				os.system('clear')
 				print ' ' + bcolors.RED + userToDel + bcolors.GREEN + ' does not exist in the DB.\n'
+
+		elif choice == 'instagram':
+			os.system('clear')
+			print ' Checking if ' + bcolors.RED + userToDel + bcolors.GREEN + ' exists in DB.'
+			time.sleep(3)
+			try:
+		 		uname = cursor.execute("SELECT * FROM InstagramUsers WHERE ID = ?", (userToDel,))
+				data = cursor.fetchone()
+
+				for uname in data[0]:
+					print ' ID: ' + bcolors.RED + userToDel + bcolors.GREEN + ' exists in DB.\n'
+					confirmDel = raw_input(bcolors.RED + ' Confirm deletion [y/n]: ' + bcolors.GREEN)
+					if confirmDel == 'y':
+						cursor.execute("DELETE FROM InstagramUsers WHERE ID = ?", (userToDel,))
+						conn.commit() 
+						delCheck = cursor.execute("SELECT * FROM InstagramUsers WHERE ID = ?", (userToDel,))
+						os.system('clear')
+						print bcolors.RED + ' ' + userToDel + bcolors.GREEN + ' was deleted from the DB.\n'
+						break
+	
+					elif confirmDel == 'n':
+						os.system('clear')
+						print bcolors.RED + userToDel + bcolors.GREEN + ' was not be deleted from DB.\n'
+						break
+					else:
+						os.system('clear')
+						print bcolors.RED + ' Invalid Syntax. Exiting to the main menu.'
+				else:
+					print bcolors.GREEN + ' There was a problem loading user: ' + bcolors.GREEN + userToDel  
+
+			except TypeError as tError:
+				os.system('clear')
+				print ' ' + bcolors.RED + userToDel + bcolors.GREEN + ' does not exist in the DB.\n'
 				
 		else:
 			os.system('clear')
@@ -534,7 +815,9 @@ def dbModify():
 		delConfirmation = raw_input(bcolors.RED + ' Are you sure you want to reset DB [y/n]: ' + bcolors.GREEN)
 		if delConfirmation == 'y':
 			print bcolors.RED + ' Resetting DB.\n'
+			cursor.execute("DROP TABLE IF EXISTS FacebookUsers")
 			cursor.execute("DROP TABLE IF EXISTS TwitterUsers")
+			cursor.execute("DROP TABLE IF EXISTS InstagramUsers")
 			time.sleep(2)
 			os.system('clear')
 			print bcolors.GREEN + ' Database has been reset.\n'
@@ -555,6 +838,3 @@ def dbModify():
 	else:
 		os.system('clear')
 		print bcolors.RED + ' Invalid Syntax. Exiting to main menu.'
-				
-
-
