@@ -14,7 +14,7 @@ def twitterScrape():
 
 	headers = {'Accept-Language': 'en-US,en;q=0.5'}
 
-	db = './db/test.db'
+	db = './db/birdseye.db'
 	conn = sqlite3.connect(db)
 	cursor = conn.cursor()
 
