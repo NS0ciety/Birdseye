@@ -10,7 +10,7 @@ def dbsearch():
 	from sqlite3 import Error
 	import sys, os, time
 
-	db = './db/test.db'
+	db = './db/birdseye.db'
 	conn = sqlite3.connect(db)
 	cursor = conn.cursor()
 
